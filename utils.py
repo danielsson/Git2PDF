@@ -27,7 +27,7 @@ class Project:
 
 	def getTempDir(self, temp_dir):
 		"""temp_dir is the global tmp directory"""
-		dir = "%s/%s" % (temp_dir, self.name)
+		dir = os.path.join(temp_dir, self.name)
 		
 		if not os.path.exists(dir):
 			os.makedirs(dir)
