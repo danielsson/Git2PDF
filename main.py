@@ -37,7 +37,7 @@ courses = scanner.scan(git_dir)
 changes = set(scanner.getChanged(git_dir))
 
 
-for project in course.projects:
+for project in courses.projects:
     #Skip if no changes
     if changes & set(project.file_paths): #If the file list has changes
         pdfmaker.make(project.name, project.file_paths, project.getTempDir(working_dir))

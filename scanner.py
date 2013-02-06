@@ -51,6 +51,6 @@ class FileScanner:
                         elif os.path.isfile(file_) and file_[file_.rfind(".") + 1:] in self.filters:
                             abs_file_path = os.path.abspath(file_)
 
-                            project.file_paths.append(abs_file)
+                            project.file_paths.append(abs_file_path)
                 find(project.path)
         return courses
