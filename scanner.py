@@ -21,9 +21,10 @@ class FileScanner:
             raise
 
         courses = {}
+	print changed_files
         for f in changed_files:
             course, project, path = self.splitParts(root,f)
-            if course == False:
+            if False in (course, project, path):
                 continue
 
             if(course not in courses):
@@ -38,7 +39,7 @@ class FileScanner:
 
     def splitParts(self, root, path):
         parts = path.split('/', 2)
-        if len(parts) != 3: return False
+        if len(parts) != 3: return False, False, False
         parts[2] = os.path.abspath(os.path.join(root, parts[0], parts[1], parts[2]))
         return parts[0], parts[1], parts[2]
 
