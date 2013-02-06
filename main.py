@@ -23,7 +23,7 @@ def fail(msg):
 #Update GIT
 try:
     os.chdir(git_dir)
-#   call("git pull", shell=True) and fail("oops")
+    call("git pull", shell=True) and fail("oops")
 except:
     fail("git update failed")
 
@@ -34,10 +34,29 @@ scanner = FileScanner(["java"])
 pdfmaker = PDFMaker()
 
 courses = scanner.scan(git_dir)
-changes = set(scanner.getChanged(git_dir))
+changes = scanner.getChanged(git_dir)
+
+touched_projects = []
 
 for course in courses:
-    for project in course.projects
+    for project in course.projects:
         #Skip if no changes
-        if changes & set(project.file_paths): #If the file list has changes
-            pdfmaker.make(project.name, project.file_paths, project.getTempDir(working_dir))
+        if any(i in project.file_paths for i in changes): #If the file list has changes
+            pdfpath = pdfmaker.make(project.name, project.file_paths, project.getTempDir(working_dir))
+            
+            #move the generated pdf to the project
+	    shutil.copy(pdfpath, project.path)
+            print pdfpath, project.path
+
+            touched_projects.append(project.name)
+
+#lets save our work
+os.chdir(git_dir)
+git_message = "Git2PDF changes: " + " ".join(touched_projects)
+if len(touched_projects):
+	call("""git add . && git commit -m "%s" """ % git_message, shell=True) and fail("could not commit")
+	call("git push", shell=True)
+
+
+#cleanup
+shutil.rmtree(working_dir)
