@@ -1,6 +1,7 @@
 #!/usr/bin/python -O
 
 import os
+import threading
 
 class Course:
 	name = ""
