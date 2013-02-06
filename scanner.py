@@ -26,6 +26,9 @@ class FileScanner:
             if course == False:
                 continue
 
+            if path[path.rfind(".") + 1:] not in self.filters:
+                continue # Filter out 
+
             if(course not in courses):
                 courses[course] = Course(course)
 
@@ -36,6 +39,7 @@ class FileScanner:
 
         return courses
 
+    #Divide the specified path into course, project, abs-path
     def splitParts(self, root, path):
         parts = path.split('/', 2)
         if len(parts) != 3: return False
