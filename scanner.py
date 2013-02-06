@@ -12,7 +12,7 @@ class FileScanner:
     
     def __init__(self, f):
         self.filters = f
-    C
+
     def getChanged(self, root):
         try:
             os.chdir(root)
@@ -34,21 +34,23 @@ class FileScanner:
         for course in courses:
             #Lets find all Projects
             course.projects = [Project(os.path.join(course.path,x))
-                                   for x in os.listdir(course.path)
-                                   if os.path.isdir(os.path.join(course.path, x))
+                              for x in os.listdir(course.path)
+                              if os.path.isdir(os.path.join(course.path, x))
                     and x[0] != "."]
 
             for project in course.projects:
                 #Recursively find all files that matches filters
                 def find(p):
                     files = [os.path.join(p,x) 
-                        for x in os.listdir(p)
-                        if x[0] != "."]
+                            for x in os.listdir(p)
+                            if x[0] != "."]
                     
-                    for file in files:
-                        if os.path.isdir(file):
-                            find(file)
-                        elif os.path.isfile(file) and file[file.rfind(".") + 1:] in self.filters:
-                            project.file_paths.append(os.path.abspath(file))
+                    for file_ in files:
+                        if os.path.isdir(file_):
+                            find(file_)
+                        elif os.path.isfile(file_) and file_[file_.rfind(".") + 1:] in self.filters:
+                            abs_file_path = os.path.abspath(file_)
+
+                            project.file_paths.append(abs_file)
                 find(project.path)
         return courses
