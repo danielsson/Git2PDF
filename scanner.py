@@ -12,7 +12,7 @@ class FileScanner:
     
     def __init__(self, f):
         self.filters = f
-    C
+
     def getChanged(self, root):
         try:
             os.chdir(root)

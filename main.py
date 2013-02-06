@@ -37,5 +37,6 @@ courses = scanner.scan(git_dir)
 
 for course in courses:
 	for project in course.projects:
-		pdfmaker.make(project.name, project.file_paths, project.getTempDir(working_dir))
+		print project.file_paths
+		#pdfmaker.make(project.name, project.file_paths, project.getTempDir(working_dir))
 
