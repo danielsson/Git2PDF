@@ -7,7 +7,7 @@ from subprocess import call
 
 class PDFMaker:
     
-    def make(self, name, paths, dir):
+    def make(self, name, paths, fdir):
         """Makes a pdf out of the files in the list paths
            name     The name of the file to generate
            paths    An array of paths to the files to compound
@@ -18,15 +18,14 @@ class PDFMaker:
         
         
         #PS stage
-        div = " "
-        src_list = div.join(paths)
+        src_list = " ".join(paths)
         
-        ps_target = "%s/%s.ps" % (tmpdir, name)
+        ps_target = "%s/%s.ps" % (fdir, name)
     
         call("""a2ps %s -2 -C -T 4 --footer="github.com/mattenrone/Git2PDF" --toc -g -o %s""" % (src_list, ps_target), shell=True)
         
         #make pdf
-        pdf_target = "%s/%s.pdf" % (tmpdir, name)
+        pdf_target = "%s/%s.pdf" % (fdir, name)
         
         call("ps2pdf %s %s" % (ps_target, pdf_target), shell=True)
         
