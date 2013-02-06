@@ -34,5 +34,18 @@ class Project:
 		
 		return dir
 
+class AsyncPdfMake(threading.Thread):
+	name = ""
+	paths = []
+	tdir = ""
+
+	def __init__(self, pdfmaker, name, paths, tdir):
+		self.pdfmaker = pdfmaker
+		self.name = name
+		self.paths = paths
+		self.tdir = tdir
+
+	def run(self):
+		self.pdfmaker.make(self.name, self.paths, self.tdir)
 
 
