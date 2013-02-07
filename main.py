@@ -41,7 +41,7 @@ touched_projects = []
 for course in courses:
     for project in course.projects:
         #Skip if no changes
-        if any(i in project.file_paths for i in changes): #If the file list has changes
+        if True: #any(i in project.file_paths for i in changes): #Disable smarts for now
             pdfpath = pdfmaker.make(project.name, project.file_paths, project.getTempDir(working_dir))
             
             #move the generated pdf to the project
