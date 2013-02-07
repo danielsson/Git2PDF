@@ -30,7 +30,7 @@ except:
 
 #Get all courses
 print git_dir
-scanner = FileScanner(["java"])
+scanner = FileScanner(["java", "txt", "go"])
 pdfmaker = PDFMaker()
 
 courses = scanner.scan(git_dir)
