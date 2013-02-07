@@ -8,7 +8,7 @@ from pdfmaker import *
 
 
 working_dir     = "/tmp/autopdf"
-git_dir     = os.path.abspath("git") #Must exist, and be a git rep.
+git_dir     = os.path.abspath("/home/matt/autogit/git") #Must exist, and be a git rep.
 
 if not os.path.exists(working_dir):
     os.makedirs(working_dir)
