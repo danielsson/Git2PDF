@@ -1,7 +1,7 @@
 #!/usr/bin/python -O
 
 import os
-import threading
+from scanner import FileScanner
 
 class Course:
 	name = ""
@@ -35,18 +35,25 @@ class Project:
 		
 		return dir
 
-class AsyncPdfMake(threading.Thread):
-	name = ""
-	paths = []
-	tdir = ""
+def makeStructure(root, exts):
+	scanner = FileScanner()
 
-	def __init__(self, pdfmaker, name, paths, tdir):
-		self.pdfmaker = pdfmaker
-		self.name = name
-		self.paths = paths
-		self.tdir = tdir
+	if not os.path.exists(root):
+            raise Error
+        
+    courses = [Course(os.path.abspath(x)) 
+            for x in os.listdir(root) 
+            if os.path.isdir(x) and x[0] != "."]
+    
+    for course in courses:
+        #Lets find all Projects
+        course.projects = [Project(os.path.join(course.path,x))
+                          for x in os.listdir(course.path)
+                          if os.path.isdir(os.path.join(course.path, x))
+                and x[0] != "."]
 
-	def run(self):
-		self.pdfmaker.make(self.name, self.paths, self.tdir)
+        for project in course.projects:
+        	for ext in exts:
+        		project.file_paths = project.file_paths + scanner.scan(project.path, ext)
 
-
+    return courses

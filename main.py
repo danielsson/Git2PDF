@@ -30,14 +30,14 @@ except:
 
 #Get all courses
 print git_dir
-scanner = FileScanner(["java"])
+scanner = FileScanner()
 pdfmaker = PDFMaker()
 
-courses = scanner.scan(git_dir)
+courses = utils.makeStructure(git_dir)
 changes = set(scanner.getChanged(git_dir))
 
 for course in courses:
     for project in course.projects
         #Skip if no changes
-        if changes & set(project.file_paths): #If the file list has changes
+        if True or changes & set(project.file_paths): #If the file list has changes
             pdfmaker.make(project.name, project.file_paths, project.getTempDir(working_dir))
