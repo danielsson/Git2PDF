@@ -34,7 +34,7 @@ print git_dir
 scanner = FileScanner()
 pdfmaker = PDFMaker()
 
-courses = utils.makeStructure(git_dir)
+courses = utils.makeStructure(git_dir, ("java", "txt"))
 changes = scanner.getChanged(git_dir)
 
 touched_projects = []
@@ -42,13 +42,12 @@ touched_projects = []
 for course in courses:
     for project in course.projects:
         #Skip if no changes
-        if True: #any(i in project.file_paths for i in changes): #Disable smarts for now
+        if any(i in project.file_paths for i in changes): #Disable smarts for now
             pdfpath = pdfmaker.make(project.name, project.file_paths, project.getTempDir(working_dir))
             
             #move the generated pdf to the project
             shutil.copy(pdfpath, project.path)
-            print pdfpath, project.path
-
+            
             touched_projects.append(project.name)
 
 #lets save our work

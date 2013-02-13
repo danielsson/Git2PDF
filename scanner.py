@@ -18,4 +18,4 @@ class FileScanner:
         return [os.path.abspath(p) for p in changed_files]
 
     def scan(self, root, ext):
-        return check_output("""find %s -iname "*.%s""" % (root, ext), shell=True).split()
+        return check_output("""find %s -iname "*.%s" """ % (root, ext), shell=True).split()
