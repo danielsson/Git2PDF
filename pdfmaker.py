@@ -22,6 +22,7 @@ class PDFMaker:
         
         ps_target = "%s/%s.ps" % (fdir, name)
     
+        print """a2ps %s -2 -C -T 4 --footer="github.com/mattenrone/Git2PDF" --toc -g -o %s""" % (src_list, ps_target)
         call("""a2ps %s -2 -C -T 4 --footer="github.com/mattenrone/Git2PDF" --toc -g -o %s""" % (src_list, ps_target), shell=True)
         
         #make pdf
